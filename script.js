@@ -1,6 +1,6 @@
 /**
  * AGENCY SERVICES — PREMIUM SCROLL ANIMATION & MULTI-DESIGN INTERACTION ENGINE
- * Alternating entrances, staggered content reveals, sticky center focus, scroll parallax, & design switcher
+ * Dynamic video source switching between Design 1 and Design 2, scroll reveals, sticky focus, and responsive sync
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,25 +8,48 @@ document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.service-card');
   const servicesContainer = document.querySelector('.services-container');
   const navButtons = document.querySelectorAll('.nav-btn');
+  const cardVideos = document.querySelectorAll('.card-video');
 
   /* ==========================================================================
-     1. DESIGN SWITCHER (DESIGN 1 / DESIGN 2 / DESIGN 3)
+     1. DESIGN SWITCHER WITH DYNAMIC VIDEO SOURCE SWITCHING
      ========================================================================== */
   navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const designId = btn.getAttribute('data-design');
       
-      // Update Active Button
+      // 1. Update Active Button State
       navButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // Update Container Design Mode
+      // 2. Update Container Design Mode
       if (servicesContainer) {
         servicesContainer.setAttribute('data-active-design', designId);
       }
 
-      // Re-sync card heights smoothly
-      setTimeout(syncCardHeights, 50);
+      // 3. Switch Video Source between Design 1 and Design 2
+      cardVideos.forEach(video => {
+        let targetSrc = '';
+        if (designId === '1') {
+          targetSrc = video.getAttribute('data-video-d1');
+        } else if (designId === '2') {
+          targetSrc = video.getAttribute('data-video-d2');
+        } else if (designId === '3') {
+          targetSrc = video.getAttribute('data-video-d2') || video.getAttribute('data-video-d1');
+        }
+
+        if (targetSrc && video.getAttribute('src') !== targetSrc) {
+          video.src = targetSrc;
+          video.load();
+          video.muted = true;
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {});
+          }
+        }
+      });
+
+      // 4. Smooth Height Equalization Re-sync
+      setTimeout(syncCardHeights, 60);
     });
   });
 
@@ -63,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-revealed');
-          observer.unobserve(entry.target); // Trigger smooth entrance once
+          observer.unobserve(entry.target);
         }
       });
     }, {
@@ -128,14 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: true });
 
-    // Initial check
     handleScrollDynamics();
   }
 
   /* ==========================================================================
-     5. RELIABLE VIDEO AUTOPLAY HANDLER
+     5. RELIABLE VIDEO AUTOPLAY INITIALIZATION
      ========================================================================== */
-  const cardVideos = document.querySelectorAll('.card-video');
   cardVideos.forEach(video => {
     video.muted = true;
     const playPromise = video.play();
