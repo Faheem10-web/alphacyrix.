@@ -273,12 +273,18 @@ body {
 }
 
 /* ==========================================================================
-   DESIGN MODE 3: CLEAN LIGHT EDITORIAL MODE
+   DESIGN MODE 3: CLEAN LIGHT EDITORIAL MODE (ENHANCED DEEP BOX SHADOW)
    ========================================================================== */
+
+.services-container[data-active-design="3"] .service-card {
+  box-shadow: 0 24px 55px -12px rgba(15, 23, 42, 0.16), 0 4px 18px rgba(15, 23, 42, 0.05);
+}
+.services-container[data-active-design="3"] .service-card:hover {
+  box-shadow: 0 32px 75px -14px rgba(15, 23, 42, 0.22), 0 6px 22px rgba(15, 23, 42, 0.08);
+}
 
 .services-container[data-active-design="3"] .card-marketing {
   background-color: var(--d3-card-1-bg);
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.05);
 }
 .services-container[data-active-design="3"] .card-marketing .card-content-wrapper {
   background-color: var(--d3-card-1-bg);
@@ -286,7 +292,6 @@ body {
 
 .services-container[data-active-design="3"] .card-infrastructure {
   background-color: var(--d3-card-2-bg);
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.05);
 }
 .services-container[data-active-design="3"] .card-infrastructure .card-content-wrapper {
   background-color: var(--d3-card-2-bg);
@@ -294,7 +299,6 @@ body {
 
 .services-container[data-active-design="3"] .card-startup {
   background-color: var(--d3-card-3-bg);
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.05);
 }
 .services-container[data-active-design="3"] .card-startup .card-content-wrapper {
   background-color: var(--d3-card-3-bg);
