@@ -54,23 +54,20 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     2. DYNAMIC EQUAL HEIGHT SYNC (Desktop & Tablet)
+     2. DYNAMIC EQUAL HEIGHT SYNC (100% Locked Equal Height on Desktop & Tablet)
      ========================================================================== */
   function syncCardHeights() {
     if (window.innerWidth > 860 && cards.length > 0) {
-      cards[0].style.height = 'auto';
-      cards[0].style.minHeight = 'auto';
-      const firstCardHeight = cards[0].offsetHeight;
-      const targetHeight = Math.max(firstCardHeight, 480);
-
       cards.forEach(card => {
-        card.style.height = `${targetHeight}px`;
-        card.style.minHeight = `${targetHeight}px`;
+        card.style.height = '520px';
+        card.style.minHeight = '520px';
+        card.style.maxHeight = '520px';
       });
     } else {
       cards.forEach(card => {
         card.style.height = 'auto';
         card.style.minHeight = 'auto';
+        card.style.maxHeight = 'none';
       });
     }
   }
