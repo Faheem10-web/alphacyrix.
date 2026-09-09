@@ -12,26 +12,57 @@ if ('scrollRestoration' in history) {
 
 // Global helper to reset scroll position to top across native and smooth-scroll engines
 function resetScrollToTop(immediate = true) {
+  // 1. Lenis smooth scroll reset if active
+  if (window.__lenisInstance) {
+    window.__lenisInstance.scrollTo(0, { immediate: immediate, force: true });
+  }
+
+  // 2. Native window reset
   window.scrollTo({
     top: 0,
     left: 0,
     behavior: immediate ? 'instant' : 'smooth'
   });
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
 
-  if (window.__lenisInstance) {
-    window.__lenisInstance.scrollTo(0, { immediate: immediate });
+  // 3. Document elements fallback
+  if (document.documentElement) {
+    document.documentElement.scrollTop = 0;
+  }
+  if (document.body) {
+    document.body.scrollTop = 0;
   }
 }
 
-// Ensure scroll is at 0 on initial script parse & beforeunload/pageshow (back-forward cache)
-window.addEventListener('pageshow', (event) => {
+// Expose globally for any external/future page or route handler
+window.resetScrollToTop = resetScrollToTop;
+
+// Immediate reset on script execution
+resetScrollToTop(true);
+
+// Ensure scroll is at 0 on pageshow (including bfcache back/forward), load & beforeunload
+window.addEventListener('pageshow', () => {
+  resetScrollToTop(true);
+});
+
+window.addEventListener('load', () => {
   resetScrollToTop(true);
 });
 
 window.addEventListener('beforeunload', () => {
   resetScrollToTop(true);
+});
+
+// Handle SPA history navigation (popstate / pushState / replaceState) & hash changes
+window.addEventListener('popstate', () => {
+  resetScrollToTop(true);
+});
+
+window.addEventListener('hashchange', (e) => {
+  // If hash is empty or #top, reset to top
+  const hash = window.location.hash;
+  if (!hash || hash === '#' || hash === '#top') {
+    resetScrollToTop(true);
+  }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -76,7 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Reset to top once Lenis is initialized
-    lenisInstance.scrollTo(0, { immediate: true });
+    lenisInstance.scrollTo(0, { immediate: true, force: true });
+    requestAnimationFrame(() => {
+      resetScrollToTop(true);
+    });
   }
 
   /* ==========================================================================
@@ -90,10 +124,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const href = anchor.getAttribute('href');
     if (!href) return;
 
-    // If navigating to another page or route without a specific hash anchor
+    // Handle internal page routes / html files / root paths
     if (href.startsWith('/') || href.endsWith('.html') || (href.startsWith('http') && href.includes(window.location.host))) {
-      // Store flag for next page load
       sessionStorage.setItem('shouldResetScroll', 'true');
+    } else if (href === '#' || href === '#top') {
+      e.preventDefault();
+      resetScrollToTop(false);
     }
   });
 
@@ -102,11 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.removeItem('shouldResetScroll');
     resetScrollToTop(true);
   }
-
-  // Handle SPA history navigation (popstate / pushState / replaceState)
-  window.addEventListener('popstate', () => {
-    resetScrollToTop(true);
-  });
 
   /* ==========================================================================
      4. DESIGN SWITCHER WITH DYNAMIC VIDEO SOURCE & LUXURY LOADER
@@ -144,7 +175,10 @@ document.addEventListener('DOMContentLoaded', () => {
   navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const designId = btn.getAttribute('data-design');
-      if (btn.classList.contains('active')) return;
+      if (btn.classList.contains('active')) {
+        resetScrollToTop(false);
+        return;
+      }
 
       // Pulse Indicator & Button Loader
       navButtons.forEach(b => {
