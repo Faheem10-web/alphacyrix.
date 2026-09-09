@@ -109,53 +109,91 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     4. DESIGN SWITCHER WITH DYNAMIC VIDEO SOURCE SWITCHING
+     4. DESIGN SWITCHER WITH DYNAMIC VIDEO SOURCE & LUXURY LOADER
      ========================================================================== */
+  const topLoader = document.getElementById('top-loader');
+
+  function triggerLoaderAnimation(callback) {
+    if (topLoader) {
+      topLoader.className = 'top-progress-bar is-loading';
+    }
+    if (servicesContainer) {
+      servicesContainer.classList.add('is-switching');
+    }
+
+    setTimeout(() => {
+      if (typeof callback === 'function') {
+        callback();
+      }
+
+      if (topLoader) {
+        topLoader.className = 'top-progress-bar is-complete';
+      }
+
+      setTimeout(() => {
+        if (servicesContainer) {
+          servicesContainer.classList.remove('is-switching');
+        }
+        if (topLoader) {
+          topLoader.className = 'top-progress-bar is-hidden';
+        }
+      }, 180);
+    }, 220);
+  }
+
   navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const designId = btn.getAttribute('data-design');
-      
-      // 1. Update Active Button State
-      navButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      if (btn.classList.contains('active')) return;
 
-      // 2. Update Container Design Mode
-      if (servicesContainer) {
-        servicesContainer.setAttribute('data-active-design', designId);
-      }
-
-      // 3. Reset scroll position to top smoothly on design switch
-      resetScrollToTop(false);
-
-      // 4. Switch Video Source between Design 1 and Design 2
-      cardVideos.forEach(video => {
-        let targetSrc = '';
-        if (designId === '1') {
-          targetSrc = video.getAttribute('data-video-d1');
-        } else if (designId === '2') {
-          targetSrc = video.getAttribute('data-video-d2');
-        } else if (designId === '3') {
-          targetSrc = video.getAttribute('data-video-d2') || video.getAttribute('data-video-d1');
-        }
-
-        if (targetSrc && video.getAttribute('src') !== targetSrc) {
-          video.src = targetSrc;
-          video.load();
-          video.muted = true;
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(() => {});
-          }
-        }
+      // Pulse Indicator & Button Loader
+      navButtons.forEach(b => {
+        b.classList.remove('active');
+        b.classList.remove('is-loading');
       });
+      btn.classList.add('active');
+      btn.classList.add('is-loading');
 
-      // 5. Smooth Height Equalization Re-sync
-      setTimeout(() => {
+      // Trigger sleek progress bar transition
+      triggerLoaderAnimation(() => {
+        btn.classList.remove('is-loading');
+
+        // 1. Update Container Design Mode
+        if (servicesContainer) {
+          servicesContainer.setAttribute('data-active-design', designId);
+        }
+
+        // 2. Reset scroll position to top smoothly on design switch
+        resetScrollToTop(true);
+
+        // 3. Switch Video Source between Design 1 and Design 2
+        cardVideos.forEach(video => {
+          let targetSrc = '';
+          if (designId === '1') {
+            targetSrc = video.getAttribute('data-video-d1');
+          } else if (designId === '2') {
+            targetSrc = video.getAttribute('data-video-d2');
+          } else if (designId === '3') {
+            targetSrc = video.getAttribute('data-video-d2') || video.getAttribute('data-video-d1');
+          }
+
+          if (targetSrc && video.getAttribute('src') !== targetSrc) {
+            video.src = targetSrc;
+            video.load();
+            video.muted = true;
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+              playPromise.catch(() => {});
+            }
+          }
+        });
+
+        // 4. Smooth Height Equalization Re-sync
         syncCardHeights();
         if (lenisInstance) {
           lenisInstance.resize();
         }
-      }, 60);
+      });
     });
   });
 
