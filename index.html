@@ -15,7 +15,27 @@
 </head>
 <body>
 
-  <main class="services-container">
+  <!-- ==============================================
+       PREMIUM FLOATING NAVBAR (DESIGN 1 / 2 / 3)
+       ============================================== -->
+  <header class="top-navbar-wrapper">
+    <nav class="premium-nav-box" aria-label="Design Style Selector">
+      <button class="nav-btn active" data-design="1" id="nav-btn-1" type="button">
+        <span class="btn-indicator"></span>
+        <span class="btn-text">Design 1</span>
+      </button>
+      <button class="nav-btn" data-design="2" id="nav-btn-2" type="button">
+        <span class="btn-indicator"></span>
+        <span class="btn-text">Design 2</span>
+      </button>
+      <button class="nav-btn" data-design="3" id="nav-btn-3" type="button">
+        <span class="btn-indicator"></span>
+        <span class="btn-text">Design 3</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="services-container" data-active-design="1">
 
     <!-- ==============================================
          CARD 01: REDEFINING MARKETING (Video Left, Content Right)

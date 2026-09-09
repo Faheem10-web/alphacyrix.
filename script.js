@@ -1,14 +1,37 @@
 /**
- * AGENCY SERVICES — PREMIUM SCROLL ANIMATION & INTERACTION ENGINE
- * Alternating entrances, staggered content reveals, sticky center focus, scroll parallax, & exit dynamics
+ * AGENCY SERVICES — PREMIUM SCROLL ANIMATION & MULTI-DESIGN INTERACTION ENGINE
+ * Alternating entrances, staggered content reveals, sticky center focus, scroll parallax, & design switcher
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cards = document.querySelectorAll('.service-card');
+  const servicesContainer = document.querySelector('.services-container');
+  const navButtons = document.querySelectorAll('.nav-btn');
 
   /* ==========================================================================
-     1. DYNAMIC EQUAL HEIGHT SYNC (Desktop & Tablet)
+     1. DESIGN SWITCHER (DESIGN 1 / DESIGN 2 / DESIGN 3)
+     ========================================================================== */
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const designId = btn.getAttribute('data-design');
+      
+      // Update Active Button
+      navButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Update Container Design Mode
+      if (servicesContainer) {
+        servicesContainer.setAttribute('data-active-design', designId);
+      }
+
+      // Re-sync card heights smoothly
+      setTimeout(syncCardHeights, 50);
+    });
+  });
+
+  /* ==========================================================================
+     2. DYNAMIC EQUAL HEIGHT SYNC (Desktop & Tablet)
      ========================================================================== */
   function syncCardHeights() {
     if (window.innerWidth > 860 && cards.length > 0) {
@@ -33,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', syncCardHeights);
 
   /* ==========================================================================
-     2. SCROLL ENTRANCE REVEAL (IntersectionObserver)
+     3. SCROLL ENTRANCE REVEAL (IntersectionObserver)
      ========================================================================== */
   if ('IntersectionObserver' in window && !isReducedMotion) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -55,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     3. STICKY CENTER EFFECT, CARD EXIT DYNAMICS & SUBTLE MEDIA PARALLAX
+     4. STICKY CENTER EFFECT, CARD EXIT DYNAMICS & SUBTLE MEDIA PARALLAX
      ========================================================================== */
   if (!isReducedMotion) {
     let ticking = false;
@@ -110,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     4. RELIABLE VIDEO AUTOPLAY HANDLER
+     5. RELIABLE VIDEO AUTOPLAY HANDLER
      ========================================================================== */
   const cardVideos = document.querySelectorAll('.card-video');
   cardVideos.forEach(video => {
@@ -132,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     5. ACTION PILL KEYBOARD ACCESSIBILITY
+     6. ACTION PILL KEYBOARD ACCESSIBILITY
      ========================================================================== */
   const pills = document.querySelectorAll('.action-pill');
   pills.forEach(pill => {
