@@ -1,19 +1,17 @@
 /**
- * AGENCY SERVICES INTERACTION ENGINE
- * Scroll reveal observer, dynamic equal height sync, & reliable video autoplay
+ * AGENCY SERVICES — PREMIUM SCROLL ANIMATION & INTERACTION ENGINE
+ * Alternating entrances, staggered content reveals, sticky center focus, scroll parallax, & exit dynamics
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cards = document.querySelectorAll('.service-card');
 
   /* ==========================================================================
-     1. DYNAMIC EQUAL HEIGHT SYNC (All cards match Card 1's exact height)
+     1. DYNAMIC EQUAL HEIGHT SYNC (Desktop & Tablet)
      ========================================================================== */
-  const cards = document.querySelectorAll('.service-card');
-  
   function syncCardHeights() {
     if (window.innerWidth > 860 && cards.length > 0) {
-      // Reset height first to measure natural height of Card 1
       cards[0].style.height = 'auto';
       cards[0].style.minHeight = 'auto';
       const firstCardHeight = cards[0].offsetHeight;
@@ -24,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
         card.style.minHeight = `${targetHeight}px`;
       });
     } else {
-      // Mobile auto reset
       cards.forEach(card => {
         card.style.height = 'auto';
         card.style.minHeight = 'auto';
@@ -32,36 +29,88 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Initial sync & resize listener
   syncCardHeights();
   window.addEventListener('resize', syncCardHeights);
 
   /* ==========================================================================
-     2. SCROLL REVEAL OBSERVER (IntersectionObserver)
+     2. SCROLL ENTRANCE REVEAL (IntersectionObserver)
      ========================================================================== */
-  const revealElements = document.querySelectorAll('.reveal-on-scroll');
-
   if ('IntersectionObserver' in window && !isReducedMotion) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-revealed');
-          observer.unobserve(entry.target);
+          observer.unobserve(entry.target); // Trigger smooth entrance once
         }
       });
     }, {
       root: null,
-      rootMargin: '0px 0px -50px 0px',
-      threshold: 0.12
+      rootMargin: '0px 0px -60px 0px',
+      threshold: 0.15
     });
 
-    revealElements.forEach(el => revealObserver.observe(el));
+    cards.forEach(card => revealObserver.observe(card));
   } else {
-    revealElements.forEach(el => el.classList.add('is-revealed'));
+    cards.forEach(card => card.classList.add('is-revealed'));
   }
 
   /* ==========================================================================
-     3. RELIABLE VIDEO AUTOPLAY HANDLER
+     3. STICKY CENTER EFFECT, CARD EXIT DYNAMICS & SUBTLE MEDIA PARALLAX
+     ========================================================================== */
+  if (!isReducedMotion) {
+    let ticking = false;
+
+    function handleScrollDynamics() {
+      const windowHeight = window.innerHeight;
+      const centerY = windowHeight / 2;
+
+      cards.forEach(card => {
+        if (!card.classList.contains('is-revealed')) return;
+
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.top + rect.height / 2;
+        const distFromCenter = cardCenter - centerY;
+        const normalizedDist = distFromCenter / (windowHeight / 2);
+
+        // Sticky Center Focus (Within 25% of viewport center)
+        if (Math.abs(normalizedDist) < 0.28) {
+          card.classList.add('card-focused');
+          card.classList.remove('card-passed');
+        } else if (rect.bottom < centerY * 0.75) {
+          // Card scrolled past center towards top exit
+          card.classList.remove('card-focused');
+          card.classList.add('card-passed');
+        } else {
+          card.classList.remove('card-focused');
+          card.classList.remove('card-passed');
+        }
+
+        // Subtle Media Parallax (max 10-14px translation, scale 1 -> 1.025)
+        if (window.innerWidth > 860 && rect.top < windowHeight && rect.bottom > 0) {
+          const media = card.querySelector('.card-video, .card-img');
+          if (media) {
+            const parallaxOffset = Math.max(Math.min(-normalizedDist * 12, 14), -14);
+            media.style.transform = `translateY(${parallaxOffset}px) scale(1.02)`;
+          }
+        }
+      });
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(handleScrollDynamics);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Initial check
+    handleScrollDynamics();
+  }
+
+  /* ==========================================================================
+     4. RELIABLE VIDEO AUTOPLAY HANDLER
      ========================================================================== */
   const cardVideos = document.querySelectorAll('.card-video');
   cardVideos.forEach(video => {
@@ -83,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     4. ACTION PILL KEYBOARD ACCESSIBILITY
+     5. ACTION PILL KEYBOARD ACCESSIBILITY
      ========================================================================== */
   const pills = document.querySelectorAll('.action-pill');
   pills.forEach(pill => {

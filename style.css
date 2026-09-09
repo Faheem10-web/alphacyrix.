@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AGENCY UI — UNIFIED SOFT DARK SLATE CARD THEME (50% VISIBILITY / SOFTER TINT)
+   AGENCY UI — 3 DISTINCT CARD COLORWAYS (MATCHING EXACT REFERENCE IMAGE)
    ========================================================================== */
 
 :root {
@@ -9,18 +9,36 @@
   /* Shared Typography Colors */
   --text-white: #FFFFFF;
   --text-body: #CBD5E1;          /* Soft readable silver for body copy */
-  --label-color: #60A5FA;        /* Soft Sky Blue Category Tag from Reference */
   
-  /* Unified 50% Softer Dark Slate Card Background */
-  --card-bg: #283344;            /* Softened dark slate navy tone */
-  --card-border: rgba(255, 255, 255, 0.08);
-  --card-shadow: 0 16px 40px -12px rgba(15, 23, 42, 0.14);
+  /* ------------------------------------------------------------------------
+     CARD 01: MIDNIGHT CHARCOAL SLATE NAVY (Marketing)
+     ------------------------------------------------------------------------ */
+  --card-1-bg: #242E3D;
+  --card-1-label: #74AAFF;
+  --card-1-pill-bg: rgba(255, 255, 255, 0.08);
+  --card-1-pill-border: rgba(255, 255, 255, 0.16);
+  --card-1-pill-hover: rgba(255, 255, 255, 0.16);
+  --card-1-shadow: rgba(36, 46, 61, 0.25);
 
-  /* Unified Pill Buttons (Translucent Frosted Capsules) */
-  --pill-bg: rgba(255, 255, 255, 0.08);
-  --pill-bg-hover: rgba(255, 255, 255, 0.15);
-  --pill-border: rgba(255, 255, 255, 0.18);
-  --pill-text: #FFFFFF;
+  /* ------------------------------------------------------------------------
+     CARD 02: TWILIGHT PLUM / OBSIDIAN VIOLET (Infrastructure)
+     ------------------------------------------------------------------------ */
+  --card-2-bg: #2E2439;
+  --card-2-label: #D8B4FE;
+  --card-2-pill-bg: rgba(216, 180, 254, 0.10);
+  --card-2-pill-border: rgba(216, 180, 254, 0.22);
+  --card-2-pill-hover: rgba(216, 180, 254, 0.18);
+  --card-2-shadow: rgba(46, 36, 57, 0.25);
+
+  /* ------------------------------------------------------------------------
+     CARD 03: NORDIC PINE / FOREST EMERALD TEAL (Startup Acceleration)
+     ------------------------------------------------------------------------ */
+  --card-3-bg: #1C302A;
+  --card-3-label: #6EE7B7;
+  --card-3-pill-bg: rgba(110, 231, 183, 0.10);
+  --card-3-pill-border: rgba(110, 231, 183, 0.22);
+  --card-3-pill-hover: rgba(110, 231, 183, 0.18);
+  --card-3-shadow: rgba(28, 48, 42, 0.25);
 
   /* Typography */
   --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -29,8 +47,9 @@
   --radius-card: 36px;
   --radius-pill: 14px;
   
-  /* Transitions */
+  /* Transitions & Premium Bezier Easing */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Base Reset */
@@ -55,6 +74,7 @@ body {
   padding: 60px 24px 100px;
   display: flex;
   justify-content: center;
+  overflow-x: hidden;
 }
 
 .services-container {
@@ -62,39 +82,182 @@ body {
   max-width: 1180px;
   display: flex;
   flex-direction: column;
-  gap: 46px;
+  gap: 52px;
 }
 
 /* ==========================================================================
-   SERVICE CARD ARCHITECTURE (ALL 3 CARDS UNIFIED SAME 50% SOFTER BG)
+   SERVICE CARD ARCHITECTURE
    ========================================================================== */
 
 .service-card {
   display: grid;
   grid-template-columns: 0.95fr 1.1fr;
-  background-color: var(--card-bg);
   border-radius: var(--radius-card);
   overflow: hidden;
   position: relative;
   height: 500px;
   min-height: 500px;
-  border: 1px solid var(--card-border);
-  box-shadow: var(--card-shadow);
-  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
-}
-
-.service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 24px 50px -12px rgba(15, 23, 42, 0.22);
-}
-
-/* Card 02: Reversed */
-.card-reversed {
-  grid-template-columns: 1.1fr 0.95fr;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.6s var(--ease), opacity 0.6s var(--ease), box-shadow 0.6s var(--ease), filter 0.6s var(--ease);
 }
 
 /* ==========================================================================
-   IMAGE / VIDEO WRAPPER
+   3 DISTINCT CARD COLORWAY DEFINITIONS
+   ========================================================================== */
+
+/* --- CARD 01: MIDNIGHT CHARCOAL SLATE NAVY --- */
+.card-marketing {
+  background-color: var(--card-1-bg);
+  box-shadow: 0 16px 40px -12px var(--card-1-shadow);
+}
+.card-marketing .card-content-wrapper {
+  background-color: var(--card-1-bg);
+}
+.card-marketing .category-label {
+  color: var(--card-1-label);
+}
+.card-marketing .action-pill {
+  background-color: var(--card-1-pill-bg);
+  border-color: var(--card-1-pill-border);
+}
+.card-marketing .action-pill:hover {
+  background-color: var(--card-1-pill-hover);
+  border-color: var(--card-1-label);
+}
+
+/* --- CARD 02: TWILIGHT PLUM / OBSIDIAN VIOLET --- */
+.card-infrastructure {
+  background-color: var(--card-2-bg);
+  box-shadow: 0 16px 40px -12px var(--card-2-shadow);
+  grid-template-columns: 1.1fr 0.95fr; /* Content Left, Media Right */
+}
+.card-infrastructure .card-content-wrapper {
+  background-color: var(--card-2-bg);
+}
+.card-infrastructure .category-label {
+  color: var(--card-2-label);
+}
+.card-infrastructure .action-pill {
+  background-color: var(--card-2-pill-bg);
+  border-color: var(--card-2-pill-border);
+}
+.card-infrastructure .action-pill:hover {
+  background-color: var(--card-2-pill-hover);
+  border-color: var(--card-2-label);
+}
+
+/* --- CARD 03: NORDIC PINE / FOREST EMERALD TEAL --- */
+.card-startup {
+  background-color: var(--card-3-bg);
+  box-shadow: 0 16px 40px -12px var(--card-3-shadow);
+}
+.card-startup .card-content-wrapper {
+  background-color: var(--card-3-bg);
+}
+.card-startup .category-label {
+  color: var(--card-3-label);
+}
+.card-startup .action-pill {
+  background-color: var(--card-3-pill-bg);
+  border-color: var(--card-3-pill-border);
+}
+.card-startup .action-pill:hover {
+  background-color: var(--card-3-pill-hover);
+  border-color: var(--card-3-label);
+}
+
+/* ==========================================================================
+   PREMIUM SCROLL ENTRANCE ANIMATIONS (DESKTOP ALTERNATING)
+   ========================================================================== */
+
+/* Card 01: Entrance from Left (-80px) */
+.card-marketing.reveal-on-scroll {
+  opacity: 0;
+  transform: translateX(-80px) scale(0.96);
+  filter: blur(8px);
+  transition: transform 800ms var(--ease-entrance), opacity 800ms var(--ease-entrance), filter 800ms var(--ease-entrance), box-shadow 0.5s var(--ease);
+  will-change: transform, opacity, filter;
+}
+
+/* Card 02: Entrance from Right (+80px) */
+.card-infrastructure.reveal-on-scroll {
+  opacity: 0;
+  transform: translateX(80px) scale(0.96);
+  filter: blur(8px);
+  transition: transform 800ms var(--ease-entrance), opacity 800ms var(--ease-entrance), filter 800ms var(--ease-entrance), box-shadow 0.5s var(--ease);
+  will-change: transform, opacity, filter;
+}
+
+/* Card 03: Entrance from Left (-80px) */
+.card-startup.reveal-on-scroll {
+  opacity: 0;
+  transform: translateX(-80px) scale(0.96);
+  filter: blur(8px);
+  transition: transform 800ms var(--ease-entrance), opacity 800ms var(--ease-entrance), filter 800ms var(--ease-entrance), box-shadow 0.5s var(--ease);
+  will-change: transform, opacity, filter;
+}
+
+/* Revealed State */
+.service-card.is-revealed {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  filter: blur(0);
+}
+
+/* Viewport Center Focus Effect */
+.service-card.card-focused {
+  transform: translateX(0) scale(1.01);
+  opacity: 1;
+  box-shadow: 0 24px 55px -12px rgba(15, 23, 42, 0.28);
+}
+
+/* Card Exit Effect */
+.service-card.card-passed {
+  transform: translateX(0) scale(0.98);
+  opacity: 0.92;
+}
+
+/* ==========================================================================
+   STAGGERED INTERNAL CONTENT REVEALS
+   ========================================================================== */
+
+.service-card.is-revealed .category-label {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: staggerUp 0.65s var(--ease) 0.10s forwards;
+}
+
+.service-card.is-revealed .card-heading {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: staggerUp 0.65s var(--ease) 0.18s forwards;
+}
+
+.service-card.is-revealed .card-description {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: staggerUp 0.65s var(--ease) 0.26s forwards;
+}
+
+.service-card.is-revealed .pills-row {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: staggerUp 0.65s var(--ease) 0.34s forwards;
+}
+
+@keyframes staggerUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   IMAGE / VIDEO WRAPPER & SCROLL PARALLAX
    ========================================================================== */
 
 .card-image-wrapper {
@@ -114,12 +277,13 @@ body {
   object-fit: cover;
   object-position: center;
   display: block;
-  transition: transform 0.7s var(--ease);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
 }
 
 .service-card:hover .card-img,
 .service-card:hover .card-video {
-  transform: scale(1.03);
+  transform: scale(1.025);
 }
 
 /* ==========================================================================
@@ -132,7 +296,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  background-color: var(--card-bg);
 }
 
 .category-label {
@@ -140,7 +303,6 @@ body {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--label-color);
   margin-bottom: 20px;
 }
 
@@ -177,9 +339,8 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--pill-bg);
-  color: var(--pill-text);
-  border: 1px solid var(--pill-border);
+  color: var(--text-white);
+  border: 1px solid;
   text-decoration: none;
   font-size: 0.925rem;
   font-weight: 600;
@@ -194,8 +355,6 @@ body {
 }
 
 .action-pill:hover {
-  background-color: var(--pill-bg-hover);
-  border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
@@ -205,23 +364,7 @@ body {
 }
 
 /* ==========================================================================
-   SMOOTH SCROLL REVEALS
-   ========================================================================== */
-
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
-  will-change: opacity, transform;
-}
-
-.reveal-on-scroll.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ==========================================================================
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE BREAKPOINTS (MOBILE DISBALE HORIZONTAL, USE TRANSLATEY)
    ========================================================================== */
 
 @media (max-width: 1024px) {
@@ -244,19 +387,43 @@ body {
   }
 
   .service-card,
-  .card-reversed {
+  .card-infrastructure {
     grid-template-columns: 1fr;
     border-radius: 28px;
     height: auto;
     min-height: auto;
   }
 
+  /* Mobile Entrance Animations (Vertical Only) */
+  .card-marketing.reveal-on-scroll,
+  .card-infrastructure.reveal-on-scroll,
+  .card-startup.reveal-on-scroll {
+    transform: translateY(50px) scale(0.97);
+    filter: none;
+    opacity: 0;
+  }
+
+  .service-card.is-revealed {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    filter: none;
+  }
+
+  .service-card.card-focused {
+    transform: translateY(0) scale(1.005);
+  }
+
+  .service-card.card-passed {
+    transform: translateY(0) scale(0.985);
+    opacity: 0.95;
+  }
+
   /* Content underneath image on mobile */
-  .card-reversed .card-content-wrapper {
+  .card-infrastructure .card-content-wrapper {
     grid-row: 2;
   }
 
-  .card-reversed .card-image-wrapper {
+  .card-infrastructure .card-image-wrapper {
     grid-row: 1;
   }
 
@@ -289,15 +456,31 @@ body {
   }
 }
 
-/* Prefers Reduced Motion */
+/* ==========================================================================
+   ACCESSIBILITY & PREFERS-REDUCED-MOTION
+   ========================================================================== */
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
     transition: none !important;
   }
   
-  .reveal-on-scroll {
+  .card-marketing.reveal-on-scroll,
+  .card-infrastructure.reveal-on-scroll,
+  .card-startup.reveal-on-scroll,
+  .service-card.reveal-on-scroll {
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
+  }
+
+  .service-card.is-revealed .category-label,
+  .service-card.is-revealed .card-heading,
+  .service-card.is-revealed .card-description,
+  .service-card.is-revealed .pills-row {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
   }
 }
