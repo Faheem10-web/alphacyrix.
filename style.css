@@ -251,25 +251,61 @@ body {
 }
 
 /* ==========================================================================
-   DESIGN MODE 2: UNIFIED 50% SOFT DARK SLATE
+   DESIGN MODE 2: 3 SEPARATE DISTINCT CARD COLORWAYS (ALPHACYRIX VIDEOS)
    ========================================================================== */
 
-.services-container[data-active-design="2"] .service-card {
-  background-color: var(--d2-card-bg);
-  box-shadow: 0 16px 40px -12px rgba(15, 23, 42, 0.16);
+.services-container[data-active-design="2"] .card-marketing {
+  background-color: var(--d1-card-1-bg);
+  box-shadow: 0 16px 40px -12px rgba(36, 46, 61, 0.3);
 }
-.services-container[data-active-design="2"] .card-content-wrapper {
-  background-color: var(--d2-card-bg);
+.services-container[data-active-design="2"] .card-marketing .card-content-wrapper {
+  background-color: var(--d1-card-1-bg);
 }
-.services-container[data-active-design="2"] .category-label {
-  color: var(--d2-label);
+.services-container[data-active-design="2"] .card-marketing .category-label {
+  color: var(--d1-card-1-label);
 }
-.services-container[data-active-design="2"] .action-pill {
-  background-color: var(--d2-pill-bg);
-  border-color: var(--d2-pill-border);
+.services-container[data-active-design="2"] .card-marketing .action-pill {
+  background-color: var(--d1-card-1-pill-bg);
+  border-color: var(--d1-card-1-pill-border);
 }
-.services-container[data-active-design="2"] .action-pill:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+.services-container[data-active-design="2"] .card-marketing .action-pill:hover {
+  border-color: var(--d1-card-1-label);
+}
+
+.services-container[data-active-design="2"] .card-infrastructure {
+  background-color: var(--d1-card-2-bg);
+  box-shadow: 0 16px 40px -12px rgba(46, 36, 57, 0.3);
+}
+.services-container[data-active-design="2"] .card-infrastructure .card-content-wrapper {
+  background-color: var(--d1-card-2-bg);
+}
+.services-container[data-active-design="2"] .card-infrastructure .category-label {
+  color: var(--d1-card-2-label);
+}
+.services-container[data-active-design="2"] .card-infrastructure .action-pill {
+  background-color: var(--d1-card-2-pill-bg);
+  border-color: var(--d1-card-2-pill-border);
+}
+.services-container[data-active-design="2"] .card-infrastructure .action-pill:hover {
+  border-color: var(--d1-card-2-label);
+}
+
+.services-container[data-active-design="2"] .card-startup {
+  background-color: var(--d1-card-3-bg);
+  box-shadow: 0 16px 40px -12px rgba(28, 48, 42, 0.3);
+}
+.services-container[data-active-design="2"] .card-startup .card-content-wrapper {
+  background-color: var(--d1-card-3-bg);
+}
+.services-container[data-active-design="2"] .card-startup .category-label {
+  color: var(--d1-card-3-label);
+}
+.services-container[data-active-design="2"] .card-startup .action-pill {
+  background-color: var(--d1-card-3-pill-bg);
+  border-color: var(--d1-card-3-pill-border);
+}
+.services-container[data-active-design="2"] .card-startup .action-pill:hover {
+  border-color: var(--d1-card-3-label);
 }
 
 /* ==========================================================================
