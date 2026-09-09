@@ -97,7 +97,8 @@ body {
   position: relative;
   height: 500px;
   min-height: 500px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: none;
+  outline: none;
   transition: transform 0.6s var(--ease), opacity 0.6s var(--ease), box-shadow 0.6s var(--ease), filter 0.6s var(--ease);
 }
 
