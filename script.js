@@ -1,6 +1,6 @@
 /**
  * AGENCY SERVICES — PREMIUM SCROLL ANIMATION & MULTI-DESIGN INTERACTION ENGINE
- * Dynamic video source switching between Design 1 and Design 2, scroll reveals, sticky focus, and responsive sync
+ * Powered by Lenis Smooth Scroll, dynamic video switching, scroll reveals, sticky focus, and responsive sync
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,7 +11,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardVideos = document.querySelectorAll('.card-video');
 
   /* ==========================================================================
-     1. DESIGN SWITCHER WITH DYNAMIC VIDEO SOURCE SWITCHING
+     1. LENIS SMOOTH SCROLL INITIALIZATION
+     ========================================================================== */
+  let lenisInstance = null;
+
+  if (typeof Lenis !== 'undefined' && !isReducedMotion) {
+    lenisInstance = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth momentum curve
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.05,
+      touchMultiplier: 1.5,
+      smoothTouch: false,
+    });
+
+    function raf(time) {
+      lenisInstance.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    // Sync scroll dynamics with Lenis scroll event
+    lenisInstance.on('scroll', () => {
+      handleScrollDynamics();
+    });
+  }
+
+  /* ==========================================================================
+     2. DESIGN SWITCHER WITH DYNAMIC VIDEO SOURCE SWITCHING
      ========================================================================== */
   navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -49,12 +79,17 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       // 4. Smooth Height Equalization Re-sync
-      setTimeout(syncCardHeights, 60);
+      setTimeout(() => {
+        syncCardHeights();
+        if (lenisInstance) {
+          lenisInstance.resize();
+        }
+      }, 60);
     });
   });
 
   /* ==========================================================================
-     2. DYNAMIC EQUAL HEIGHT SYNC (100% Locked Equal Height on Desktop & Tablet)
+     3. DYNAMIC EQUAL HEIGHT SYNC (100% Locked Equal Height on Desktop & Tablet)
      ========================================================================== */
   function syncCardHeights() {
     if (window.innerWidth > 860 && cards.length > 0) {
@@ -73,10 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   syncCardHeights();
-  window.addEventListener('resize', syncCardHeights);
+  window.addEventListener('resize', () => {
+    syncCardHeights();
+    if (lenisInstance) {
+      lenisInstance.resize();
+    }
+  });
 
   /* ==========================================================================
-     3. SCROLL ENTRANCE REVEAL (IntersectionObserver)
+     4. SCROLL ENTRANCE REVEAL (IntersectionObserver)
      ========================================================================== */
   if ('IntersectionObserver' in window && !isReducedMotion) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -98,61 +138,64 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     4. STICKY CENTER EFFECT, CARD EXIT DYNAMICS & SUBTLE MEDIA PARALLAX
+     5. STICKY CENTER EFFECT, CARD EXIT DYNAMICS & SUBTLE MEDIA PARALLAX
      ========================================================================== */
-  if (!isReducedMotion) {
+  function handleScrollDynamics() {
+    if (isReducedMotion) return;
+
+    const windowHeight = window.innerHeight;
+    const centerY = windowHeight / 2;
+
+    cards.forEach(card => {
+      if (!card.classList.contains('is-revealed')) return;
+
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.top + rect.height / 2;
+      const distFromCenter = cardCenter - centerY;
+      const normalizedDist = distFromCenter / (windowHeight / 2);
+
+      // Sticky Center Focus (Within 25% of viewport center)
+      if (Math.abs(normalizedDist) < 0.28) {
+        card.classList.add('card-focused');
+        card.classList.remove('card-passed');
+      } else if (rect.bottom < centerY * 0.75) {
+        // Card scrolled past center towards top exit
+        card.classList.remove('card-focused');
+        card.classList.add('card-passed');
+      } else {
+        card.classList.remove('card-focused');
+        card.classList.remove('card-passed');
+      }
+
+      // Subtle Media Parallax (max 10-14px translation, scale 1 -> 1.025)
+      if (window.innerWidth > 860 && rect.top < windowHeight && rect.bottom > 0) {
+        const media = card.querySelector('.card-video, .card-img');
+        if (media) {
+          const parallaxOffset = Math.max(Math.min(-normalizedDist * 12, 14), -14);
+          media.style.transform = `translateY(${parallaxOffset}px) scale(1.02)`;
+        }
+      }
+    });
+  }
+
+  // Native scroll fallback listener if lenis is not active
+  if (!lenisInstance) {
     let ticking = false;
-
-    function handleScrollDynamics() {
-      const windowHeight = window.innerHeight;
-      const centerY = windowHeight / 2;
-
-      cards.forEach(card => {
-        if (!card.classList.contains('is-revealed')) return;
-
-        const rect = card.getBoundingClientRect();
-        const cardCenter = rect.top + rect.height / 2;
-        const distFromCenter = cardCenter - centerY;
-        const normalizedDist = distFromCenter / (windowHeight / 2);
-
-        // Sticky Center Focus (Within 25% of viewport center)
-        if (Math.abs(normalizedDist) < 0.28) {
-          card.classList.add('card-focused');
-          card.classList.remove('card-passed');
-        } else if (rect.bottom < centerY * 0.75) {
-          // Card scrolled past center towards top exit
-          card.classList.remove('card-focused');
-          card.classList.add('card-passed');
-        } else {
-          card.classList.remove('card-focused');
-          card.classList.remove('card-passed');
-        }
-
-        // Subtle Media Parallax (max 10-14px translation, scale 1 -> 1.025)
-        if (window.innerWidth > 860 && rect.top < windowHeight && rect.bottom > 0) {
-          const media = card.querySelector('.card-video, .card-img');
-          if (media) {
-            const parallaxOffset = Math.max(Math.min(-normalizedDist * 12, 14), -14);
-            media.style.transform = `translateY(${parallaxOffset}px) scale(1.02)`;
-          }
-        }
-      });
-
-      ticking = false;
-    }
-
     window.addEventListener('scroll', () => {
       if (!ticking) {
-        requestAnimationFrame(handleScrollDynamics);
+        requestAnimationFrame(() => {
+          handleScrollDynamics();
+          ticking = false;
+        });
         ticking = true;
       }
     }, { passive: true });
-
-    handleScrollDynamics();
   }
 
+  handleScrollDynamics();
+
   /* ==========================================================================
-     5. RELIABLE VIDEO AUTOPLAY INITIALIZATION
+     6. RELIABLE VIDEO AUTOPLAY INITIALIZATION
      ========================================================================== */
   cardVideos.forEach(video => {
     video.muted = true;
@@ -173,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     6. ACTION PILL KEYBOARD ACCESSIBILITY
+     7. ACTION PILL KEYBOARD ACCESSIBILITY
      ========================================================================== */
   const pills = document.querySelectorAll('.action-pill');
   pills.forEach(pill => {
