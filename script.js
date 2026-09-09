@@ -1,9 +1,43 @@
 /**
- * AGENCY SERVICES — PREMIUM SCROLL ANIMATION & MULTI-DESIGN INTERACTION ENGINE
- * Powered by Lenis Smooth Scroll, dynamic video switching, scroll reveals, sticky focus, and responsive sync
+ * AGENCY SERVICES — GLOBAL ROUTE NAVIGATION & SCROLL ENGINE
+ * Global scroll-to-top reset on all route changes, Lenis smooth scroll, dynamic video switching & reveals
  */
 
+// ==========================================================================
+// 1. GLOBAL SCROLL RESTORATION RESET (Runs immediately before DOM render)
+// ==========================================================================
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
+// Global helper to reset scroll position to top across native and smooth-scroll engines
+function resetScrollToTop(immediate = true) {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: immediate ? 'instant' : 'smooth'
+  });
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+
+  if (window.__lenisInstance) {
+    window.__lenisInstance.scrollTo(0, { immediate: immediate });
+  }
+}
+
+// Ensure scroll is at 0 on initial script parse & beforeunload/pageshow (back-forward cache)
+window.addEventListener('pageshow', (event) => {
+  resetScrollToTop(true);
+});
+
+window.addEventListener('beforeunload', () => {
+  resetScrollToTop(true);
+});
+
 document.addEventListener('DOMContentLoaded', () => {
+  // Ensure top position on DOM ready
+  resetScrollToTop(true);
+
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const cards = document.querySelectorAll('.service-card');
   const servicesContainer = document.querySelector('.services-container');
@@ -11,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardVideos = document.querySelectorAll('.card-video');
 
   /* ==========================================================================
-     1. LENIS SMOOTH SCROLL INITIALIZATION
+     2. LENIS SMOOTH SCROLL INITIALIZATION
      ========================================================================== */
   let lenisInstance = null;
 
@@ -27,6 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
       smoothTouch: false,
     });
 
+    window.__lenisInstance = lenisInstance;
+
     function raf(time) {
       lenisInstance.raf(time);
       requestAnimationFrame(raf);
@@ -38,10 +74,42 @@ document.addEventListener('DOMContentLoaded', () => {
     lenisInstance.on('scroll', () => {
       handleScrollDynamics();
     });
+
+    // Reset to top once Lenis is initialized
+    lenisInstance.scrollTo(0, { immediate: true });
   }
 
   /* ==========================================================================
-     2. DESIGN SWITCHER WITH DYNAMIC VIDEO SOURCE SWITCHING
+     3. GLOBAL ROUTE & INTERNAL LINK SCROLL RESET LISTENER
+     ========================================================================== */
+  // Intercept all internal anchor navigation and route changes
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a');
+    if (!anchor) return;
+
+    const href = anchor.getAttribute('href');
+    if (!href) return;
+
+    // If navigating to another page or route without a specific hash anchor
+    if (href.startsWith('/') || href.endsWith('.html') || (href.startsWith('http') && href.includes(window.location.host))) {
+      // Store flag for next page load
+      sessionStorage.setItem('shouldResetScroll', 'true');
+    }
+  });
+
+  // Check if previous navigation flagged a scroll reset
+  if (sessionStorage.getItem('shouldResetScroll') === 'true') {
+    sessionStorage.removeItem('shouldResetScroll');
+    resetScrollToTop(true);
+  }
+
+  // Handle SPA history navigation (popstate / pushState / replaceState)
+  window.addEventListener('popstate', () => {
+    resetScrollToTop(true);
+  });
+
+  /* ==========================================================================
+     4. DESIGN SWITCHER WITH DYNAMIC VIDEO SOURCE SWITCHING
      ========================================================================== */
   navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -56,7 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
         servicesContainer.setAttribute('data-active-design', designId);
       }
 
-      // 3. Switch Video Source between Design 1 and Design 2
+      // 3. Reset scroll position to top smoothly on design switch
+      resetScrollToTop(false);
+
+      // 4. Switch Video Source between Design 1 and Design 2
       cardVideos.forEach(video => {
         let targetSrc = '';
         if (designId === '1') {
@@ -78,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // 4. Smooth Height Equalization Re-sync
+      // 5. Smooth Height Equalization Re-sync
       setTimeout(() => {
         syncCardHeights();
         if (lenisInstance) {
@@ -89,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     3. DYNAMIC EQUAL HEIGHT SYNC (100% Locked Equal Height on Desktop & Tablet)
+     5. DYNAMIC EQUAL HEIGHT SYNC (100% Locked Equal Height on Desktop & Tablet)
      ========================================================================== */
   function syncCardHeights() {
     if (window.innerWidth > 860 && cards.length > 0) {
@@ -116,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     4. SCROLL ENTRANCE REVEAL (IntersectionObserver)
+     6. SCROLL ENTRANCE REVEAL (IntersectionObserver)
      ========================================================================== */
   if ('IntersectionObserver' in window && !isReducedMotion) {
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -138,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ==========================================================================
-     5. STICKY CENTER EFFECT, CARD EXIT DYNAMICS & SUBTLE MEDIA PARALLAX
+     7. STICKY CENTER EFFECT, CARD EXIT DYNAMICS & SUBTLE MEDIA PARALLAX
      ========================================================================== */
   function handleScrollDynamics() {
     if (isReducedMotion) return;
@@ -195,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
   handleScrollDynamics();
 
   /* ==========================================================================
-     6. RELIABLE VIDEO AUTOPLAY INITIALIZATION
+     8. RELIABLE VIDEO AUTOPLAY INITIALIZATION
      ========================================================================== */
   cardVideos.forEach(video => {
     video.muted = true;
@@ -216,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ==========================================================================
-     7. ACTION PILL KEYBOARD ACCESSIBILITY
+     9. ACTION PILL KEYBOARD ACCESSIBILITY
      ========================================================================== */
   const pills = document.querySelectorAll('.action-pill');
   pills.forEach(pill => {
