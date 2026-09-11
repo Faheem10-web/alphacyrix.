@@ -163,7 +163,7 @@ img {
 .nav-link {
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--text-secondary);
+  color: #ffffff;
   position: relative;
   padding: 0.25rem 0;
   letter-spacing: 0.01em;
