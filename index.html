@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alphacyrix — Experiences Powered by Intelligence</title>
+  <meta name="description" content="Alphacyrix is a premier design and AI engineering agency building transformative digital experiences, autonomous systems, and enterprise growth platforms." />
+  
+  <!-- Fonts & Icons: Including Syne & Plus Jakarta Sans as used on webandcrafts.com -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <link rel="stylesheet" href="style.css?v=2.5" />
+</head>
+<body>
+
+  <!-- Ambient Glows -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Navigation Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner container">
+      <!-- Brand Logo -->
+      <a href="#hero" class="brand-logo" aria-label="Alphacyrix Home">
+        <img src="logo.png" alt="Alphacyrix Logo" class="logo-image" />
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="nav-menu" id="navMenu">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#work" class="nav-link">Work</a>
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#careers" class="nav-link">Careers</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <!-- CTA Action -->
+      <div class="header-actions">
+        <button class="btn-pill-white" id="openProjectModalBtn">
+          Start a project
+        </button>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero Section -->
+  <section class="hero-section" id="hero">
+    <!-- Cinematic Backdrop Slides -->
+    <div class="hero-backdrop">
+      <div class="backdrop-image-wrapper">
+        <video autoplay loop muted playsinline class="backdrop-img backdrop-video slide-bg active" id="heroBgVideo" data-bg-index="0">
+          <source src="assets/hero-video.mp4" type="video/mp4" />
+          <source src="https://res.cloudinary.com/s65vvowk/video/upload/v1789035987/Create_a_second_premium_cin.mp4" type="video/mp4" />
+        </video>
+        <div class="slide-video-wrap slide-bg" data-bg-index="1">
+          <video loop muted playsinline class="backdrop-img backdrop-video" id="heroBgVideo3">
+            <source src="assets/hero-video-3.mp4" type="video/mp4" />
+          </video>
+          <div class="slide-dark-gradient"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Foreground Floating Content -->
+    <div class="hero-foreground container">
+      <div class="hero-headline-block">
+        <h1 class="hero-title">
+          <span class="title-line">Experiences Powered</span>
+          <span class="title-line">by Intelligence</span>
+        </h1>
+
+        <div class="hero-cta-wrapper">
+          <button class="btn-get-in-touch" id="heroGetInTouchBtn">
+            <span class="icon-circle">
+              <i class="fa-solid fa-arrow-right"></i>
+            </span>
+            <span class="btn-label">GET IN TOUCH</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Bottom Right Floating Mini-Player Showcase Widget (100% matched to reference) -->
+      <div class="hero-showcase-widget" id="heroWidget">
+        <div class="widget-preview-card" id="widgetPreviewCard">
+          <img src="assets/card-thumb-savant.jpg" alt="Intelligence That Adapts" class="widget-card-image" id="widgetThumbImg" />
+          <div class="widget-glass-sheen"></div>
+        </div>
+
+        <!-- Sleek Slider Controls Capsule with glass feel -->
+        <div class="widget-controls-capsule">
+          <div class="slider-progress-capsule active" data-index="0" id="slideIndicator0">
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="progressFill0"></div>
+            </div>
+          </div>
+          <button class="slider-dot" data-index="1" id="slideDot1" aria-label="Slide 2"></button>
+          <button class="btn-pause-toggle" id="playPauseBtn" aria-label="Pause">
+            <i class="fa-solid fa-pause" id="playPauseIcon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Double Chevron Scroll Down Indicator -->
+    <a href="#work" class="hero-scroll-indicator" id="heroScrollIndicator" aria-label="Scroll down">
+      <span class="chevron-arrow chevron-top">
+        <svg width="22" height="12" viewBox="0 0 22 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L11 10L20 2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span class="chevron-arrow chevron-bottom">
+        <svg width="22" height="12" viewBox="0 0 22 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 2L11 10L20 2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </a>
+  </section>
+
+  <section class="stats-section" id="stats">
+    <div class="container stats-grid">
+      <div class="stat-item">
+        <div>
+          <span class="stat-number">120</span>
+          <span class="stat-suffix">+</span>
+        </div>
+        <span class="stat-label">Brands transformed</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div>
+          <span class="stat-prefix">$</span>
+          <span class="stat-number">48</span>
+          <span class="stat-suffix">M</span>
+        </div>
+        <span class="stat-label">Client revenue influenced</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div>
+          <span class="stat-number">8</span>
+          <span class="stat-suffix">x</span>
+        </div>
+        <span class="stat-label">Average funnel lift</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div>
+          <span class="stat-number">14</span>
+          <span class="stat-suffix">d</span>
+        </div>
+        <span class="stat-label">Average launch sprint</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-work" id="work">
+    <div class="container">
+      <div class="section-header-wrap">
+        <div class="section-kicker"><span class="kicker-dot"></span> selected work</div>
+        <h2 class="section-title">We design the experiences that turn attention into momentum.</h2>
+        <p class="section-subtitle">From category-defining launches to intelligent operations, we combine strategy, design, AI, and product thinking into one high-performance engine.</p>
+      </div>
+
+      <div class="work-filters" aria-label="Work filters">
+        <button class="filter-btn active" type="button">All</button>
+        <button class="filter-btn" type="button">AI Systems</button>
+        <button class="filter-btn" type="button">Brand Experience</button>
+        <button class="filter-btn" type="button">Growth Platforms</button>
+      </div>
+
+      <div class="work-grid">
+        <article class="work-card">
+          <div class="work-card-media bg-savant">
+            <span class="card-badge">AI</span>
+            <div class="work-visual-mockup">
+              <div class="mockup-chip"><span>●</span> Savant OS</div>
+              <div class="mockup-chip"><span>●</span> Predictive onboarding</div>
+            </div>
+          </div>
+          <div class="work-card-info">
+            <div class="card-meta">
+              <span class="meta-tag">AI Strategy</span>
+              <span class="meta-year">2025</span>
+            </div>
+            <h3 class="card-title">Savant Intelligence Layer</h3>
+            <p class="card-desc">A decision engine that personalizes product journeys in real time, turning fragmented data into conversion-driving experiences.</p>
+            <div class="card-metrics">
+              <span class="metric-pill"><strong>3.2x</strong> engagement</span>
+              <span class="metric-pill"><strong>42%</strong> CAC reduction</span>
+            </div>
+            <a href="#contact" class="btn-card-explore">Explore case study <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="work-card">
+          <div class="work-card-media bg-apex">
+            <span class="card-badge">Brand</span>
+            <div class="work-visual-mockup">
+              <div class="mockup-chip"><span>●</span> Apex Commerce</div>
+              <div class="mockup-chip"><span>●</span> Retail repositioning</div>
+            </div>
+          </div>
+          <div class="work-card-info">
+            <div class="card-meta">
+              <span class="meta-tag">Brand Systems</span>
+              <span class="meta-year">2024</span>
+            </div>
+            <h3 class="card-title">Apex Commerce Rebrand</h3>
+            <p class="card-desc">Luxury commerce identity and launch system built to raise perceived value, simplify conversion, and unify global channels.</p>
+            <div class="card-metrics">
+              <span class="metric-pill"><strong>57%</strong> conversion lift</span>
+              <span class="metric-pill"><strong>2.4x</strong> retention</span>
+            </div>
+            <a href="#contact" class="btn-card-explore">Explore case study <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+
+        <article class="work-card">
+          <div class="work-card-media bg-spatial">
+            <span class="card-badge">Platform</span>
+            <div class="work-visual-mockup">
+              <div class="mockup-chip"><span>●</span> Spatial CRM</div>
+              <div class="mockup-chip"><span>●</span> Pipeline intelligence</div>
+            </div>
+          </div>
+          <div class="work-card-info">
+            <div class="card-meta">
+              <span class="meta-tag">Growth Systems</span>
+              <span class="meta-year">2025</span>
+            </div>
+            <h3 class="card-title">Spatial CRM Platform</h3>
+            <p class="card-desc">An AI-managed pipeline command center that centralizes signals, automations, and executive reporting across sales and marketing.</p>
+            <div class="card-metrics">
+              <span class="metric-pill"><strong>31%</strong> faster cycles</span>
+              <span class="metric-pill"><strong>4.1x</strong> more pipeline</span>
+            </div>
+            <a href="#contact" class="btn-card-explore">Explore case study <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-services" id="services">
+    <div class="container">
+      <div class="section-header-wrap">
+        <div class="section-kicker"><span class="kicker-dot"></span> what we do</div>
+        <h2 class="section-title">A multidisciplinary studio built for ambitious growth.</h2>
+      </div>
+
+      <div class="services-grid">
+        <article class="service-card highlighted">
+          <span class="service-badge">Core</span>
+          <div class="service-icon-box"><i class="fa-solid fa-brain"></i></div>
+          <h3 class="service-title">AI Product Engineering</h3>
+          <p class="service-text">We turn AI into strategic leverage with intelligent flows, agentic systems, and measurable automation designed for execution.</p>
+          <ul class="service-features">
+            <li><i class="fa-solid fa-check"></i> AI product strategy</li>
+            <li><i class="fa-solid fa-check"></i> Agentic workflow design</li>
+            <li><i class="fa-solid fa-check"></i> prototyping & rollout</li>
+          </ul>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon-box"><i class="fa-solid fa-compass-drafting"></i></div>
+          <h3 class="service-title">Design & Positioning</h3>
+          <p class="service-text">We sharpen your market story through premium visual systems, UX systems, and narrative-driven digital experiences.</p>
+          <ul class="service-features">
+            <li><i class="fa-solid fa-check"></i> Brand architecture</li>
+            <li><i class="fa-solid fa-check"></i> Experience design</li>
+            <li><i class="fa-solid fa-check"></i> Launch campaigns</li>
+          </ul>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon-box"><i class="fa-solid fa-chart-line"></i></div>
+          <h3 class="service-title">Growth Infrastructure</h3>
+          <p class="service-text">We build the systems behind scale: data pipelines, CRM intelligence, and digital funnels that turn demand into pipeline.</p>
+          <ul class="service-features">
+            <li><i class="fa-solid fa-check"></i> Performance funnels</li>
+            <li><i class="fa-solid fa-check"></i> KPI dashboards</li>
+            <li><i class="fa-solid fa-check"></i> system integration</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-about" id="about">
+    <div class="container about-split">
+      <div>
+        <div class="section-kicker"><span class="kicker-dot"></span> our ethos</div>
+        <h2 class="about-headline">We are equal parts strategic studio and systems partner.</h2>
+        <p class="about-lead">Alphacyrix builds experiences that feel premium, behave intelligently, and perform under pressure.</p>
+        <p class="about-body">Our teams work across product, brand, growth, and automation so the work feels cohesive from first impression to revenue impact. We don’t blend teams—we orchestrate them into one operating rhythm.</p>
+
+        <div class="about-highlights">
+          <div class="highlight-item">
+            <span class="hl-num">01</span>
+            <div class="hl-text">
+              <h4>Strategy-led execution</h4>
+              <p>Clear positioning, measurable goals, and sharp focus from concept to launch.</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <span class="hl-num">02</span>
+            <div class="hl-text">
+              <h4>Human-centered design</h4>
+              <p>Premium experiences that feel effortless while converting intent into action.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual-card-glass">
+        <div class="card-glass-header">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="header-status">alphacyrix://systems</span>
+        </div>
+        <div class="card-glass-body">
+          <div><span class="c-purple">const</span> <span class="c-cyan">experienceStack</span> = {</div>
+          <div class="indent"><span class="c-green">brand</span>: <span class="c-yellow">"signal"</span>,</div>
+          <div class="indent"><span class="c-green">ux</span>: <span class="c-yellow">"precision"</span>,</div>
+          <div class="indent"><span class="c-green">ai</span>: <span class="c-yellow">"autonomy"</span>,</div>
+          <div class="indent"><span class="c-green">growth</span>: <span class="c-yellow">"velocity"</span>,</div>
+          <div>};</div>
+          <div class="indent"><span class="c-purple">return</span> <span class="c-blue">buildSystems</span>(experienceStack);</div>
+          <div class="indent-2"><span class="c-orange">// optimize for attention, trust, and conversion</span></div>
+        </div>
+        <div class="card-glass-footer">
+          <span class="pulse-indicator"></span>
+          <span>live operating system</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-careers" id="careers">
+    <div class="container">
+      <div class="careers-card-banner">
+        <div class="banner-content">
+          <div class="section-kicker"><span class="kicker-dot"></span> careers</div>
+          <h2 class="banner-title">We build with exceptional makers, operators, and thinkers.</h2>
+          <p class="banner-desc">If you thrive at the intersection of craft, systems thinking, and ambition, we want to hear from you.</p>
+          <div class="roles-tags">
+            <span class="role-tag">Product Designer</span>
+            <span class="role-tag">AI Engineer</span>
+            <span class="role-tag">Brand Strategist</span>
+            <span class="role-tag">Growth Lead</span>
+          </div>
+        </div>
+        <button class="btn-pill-white" type="button">Join the studio</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-contact" id="contact">
+    <div class="container">
+      <div class="contact-header">
+        <div class="section-kicker"><span class="kicker-dot"></span> contact</div>
+        <h2 class="section-title">Tell us what you’re building.</h2>
+        <p class="section-subtitle">We partner with leaders who want design clarity, AI leverage, and a sharper growth engine.</p>
+      </div>
+
+      <div class="contact-card">
+        <form class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contactName">Name</label>
+              <input id="contactName" type="text" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label for="contactEmail">Email</label>
+              <input id="contactEmail" type="email" placeholder="your@email.com" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contactCompany">Company</label>
+              <input id="contactCompany" type="text" placeholder="Company or brand" />
+            </div>
+            <div class="form-group">
+              <label for="contactFocus">Focus</label>
+              <select id="contactFocus">
+                <option>AI Product</option>
+                <option>Brand Experience</option>
+                <option>Growth Systems</option>
+                <option>Full Transformation</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contactMessage">Project brief</label>
+            <textarea id="contactMessage" rows="5" placeholder="Share the goals, timeline, and what success looks like."></textarea>
+          </div>
+
+          <div class="form-submit-row">
+            <span class="form-note"><i class="fa-solid fa-shield-heart"></i> We respond within 24 hours.</span>
+            <button class="btn-pill-white" type="submit">Send inquiry</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <img src="logo.png" alt="Alphacyrix" class="footer-logo" />
+          <p class="footer-tagline">Designing premium digital experiences and AI-powered systems for brands ready to scale.</p>
+          <div class="footer-socials">
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#services">Services</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#careers">Careers <span class="hiring-tag">Hiring</span></a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#hero">Start a project</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Office</h4>
+          <p class="office-location"><strong>Global</strong><br />Remote-first studio serving clients across North America, Europe, and the Middle East.</p>
+          <p class="office-location"><strong>Email</strong><br />hello@alphacyrix.com</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Alphacyrix. All rights reserved.</span>
+        <div class="footer-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive Project Consultation Modal -->
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal-card">
+      <button class="modal-close" id="closeProjectModal" aria-label="Close modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="modal-header">
+        <div class="section-kicker"><span class="kicker-dot"></span> PROJECT INITIATION</div>
+        <h3 class="modal-title">Let's Build Something Exceptional</h3>
+        <p class="modal-subtitle">Select your requirements and our solutions architect will reach out.</p>
+      </div>
+
+      <form id="projectModalForm" class="modal-form">
+        <div class="form-group">
+          <label>Estimated Project Scope</label>
+          <div class="budget-options">
+            <label class="budget-pill">
+              <input type="radio" name="scope" value="flagship" checked />
+              <span>Flagship Platform ($50k - $150k)</span>
+            </label>
+            <label class="budget-pill">
+              <input type="radio" name="scope" value="enterprise" />
+              <span>Enterprise Transformation ($150k+)</span>
+            </label>
+            <label class="budget-pill">
+              <input type="radio" name="scope" value="ai_poc" />
+              <span>AI Prototype / POC ($25k - $50k)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="modalName">Name</label>
+            <input type="text" id="modalName" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label for="modalEmail">Email</label>
+            <input type="email" id="modalEmail" placeholder="your@email.com" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="modalNotes">Project Summary</label>
+          <textarea id="modalNotes" rows="3" placeholder="Tell us about the project goals, target audience, and launch date..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-pill-white btn-modal-submit">
+          Submit Project Brief
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notification" id="toastNotification">
+    <div class="toast-icon"><i class="fa-solid fa-circle-check"></i></div>
+    <div class="toast-msg" id="toastMessage">Inquiry transmitted successfully!</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
