@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bgIndex: 0
     },
     {
-      thumb: 'assets/card-thumb-savant.jpg',
+      thumb: 'assets/card-thumb-slide2.jpg',
       bgIndex: 1
     }
   ];
