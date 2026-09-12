@@ -329,11 +329,11 @@ img {
   pointer-events: none;
 }
 
-/* Slide 0 Video: Natural full view display */
+/* Slide 0 Video: Zoomed slightly to cleanly crop out top timer & Gemini watermark */
 #heroBgVideo {
   filter: brightness(1.05) contrast(1.02);
-  transform: scale(1);
-  transform-origin: center center;
+  transform: scale(1.15);
+  transform-origin: center 60%;
   object-fit: cover;
   object-position: center center;
 }
@@ -364,8 +364,8 @@ img {
   object-fit: cover;
   object-position: center center;
   filter: brightness(0.95) contrast(1.06);
-  transform: scale(1.05);
-  transform-origin: center center;
+  transform: scale(1.15);
+  transform-origin: center 60%;
   opacity: 1;
 }
 
@@ -624,7 +624,7 @@ img {
 .hero-title {
   font-family: var(--font-main);
   font-size: clamp(2.5rem, 4.3vw, 4.2rem);
-  font-weight: 300;
+  font-weight: 700;
   line-height: 1.22;
   letter-spacing: -0.03em;
   color: #ffffff;
@@ -2207,13 +2207,14 @@ img {
   color: #FFFFFF;
 }
 
-/* Keyword highlight using light, luminous Electric Blue -> Cyan -> Violet gradient */
+/* Keyword highlight: Vibrant Electric Blue to Cyan Gradient matching reference "Digital" */
 .keyword-gradient {
-  background: linear-gradient(135deg, #58a6ff 0%, #79c0ff 40%, #c4b5fd 100%);
+  background: linear-gradient(90deg, #0050e6 0%, #0077f2 45%, #00b0ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   display: inline-block;
+  font-weight: inherit;
   padding-bottom: 0.22em;
   margin-bottom: -0.22em;
   padding-right: 0.05em;
