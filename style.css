@@ -329,15 +329,19 @@ img {
   width: 100%;
   height: 100%;
   /* Gentle, subtle dark overlay - preserves natural video brightness while keeping white text readable */
-  background:
-    linear-gradient(90deg,
-      rgba(6, 9, 16, 0.48) 0%,
-      rgba(6, 10, 20, 0.28) 40%,
-      rgba(6, 10, 20, 0.08) 100%),
-    linear-gradient(180deg,
-      rgba(6, 9, 16, 0.38) 0%,
-      transparent 35%,
-      rgba(6, 9, 16, 0.35) 100%);
+  background: 
+    linear-gradient(
+      90deg, 
+      rgba(6, 9, 16, 0.48) 0%, 
+      rgba(6, 10, 20, 0.28) 40%, 
+      rgba(6, 10, 20, 0.08) 100%
+    ),
+    linear-gradient(
+      180deg, 
+      rgba(6, 9, 16, 0.38) 0%, 
+      transparent 35%, 
+      rgba(6, 9, 16, 0.35) 100%
+    );
   pointer-events: none;
   z-index: 2;
 }
@@ -573,7 +577,7 @@ img {
 .hero-title {
   font-family: var(--font-main);
   font-size: clamp(2.5rem, 4.3vw, 4.2rem);
-  font-weight: 800 !important;
+  font-weight: 300;
   line-height: 1.14;
   letter-spacing: -0.03em;
   color: #ffffff;
@@ -584,7 +588,6 @@ img {
 .hero-title .title-line {
   display: block;
   white-space: nowrap;
-  font-weight: 1500 !important;
 }
 
 /* "GET IN TOUCH" Button (Exact Capsule with Red Arrow Circle) */
@@ -786,13 +789,10 @@ img {
 }
 
 @keyframes chevronPulse {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0);
     opacity: 1;
   }
-
   50% {
     transform: translateY(5px);
     opacity: 0.45;
