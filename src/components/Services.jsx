@@ -25,7 +25,7 @@ export default function Services({ onOpenModal }) {
             </div>
 
             <h2 className="card-heading">
-              The boost that you need in the digital age
+              The boost that you need <br />in the <span className="keyword-gradient">digital age</span>
             </h2>
 
             <p className="card-description">
@@ -57,7 +57,7 @@ export default function Services({ onOpenModal }) {
             </div>
 
             <h2 className="card-heading">
-              Develop your digital infrastructure
+              Develop your digital <br /><span className="keyword-gradient">infrastructure</span>
             </h2>
 
             <p className="card-description">
@@ -109,7 +109,7 @@ export default function Services({ onOpenModal }) {
             </div>
 
             <h2 className="card-heading">
-              Create without boundaries
+              Create without <br /><span className="keyword-gradient">boundaries</span>
             </h2>
 
             <p className="card-description">

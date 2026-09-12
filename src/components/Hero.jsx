@@ -206,7 +206,7 @@ export default function Hero({ onOpenModal }) {
         <div className="hero-headline-block">
           <h1 className="hero-title">
             <span className="title-line">Experiences Powered</span>
-            <span className="title-line">by Intelligence</span>
+            <span className="title-line">by <span className="keyword-gradient">Intelligence</span></span>
           </h1>
 
           <div className="hero-cta-wrapper">
