@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AmbientGlows from '../components/AmbientGlows';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
+import Services from '../components/Services';
 import ProjectModal from '../components/ProjectModal';
 import Toast from '../components/Toast';
 
@@ -32,6 +33,7 @@ export default function Home() {
       <Header onOpenModal={handleOpenModal} />
       <main>
         <Hero onOpenModal={handleOpenModal} />
+        <Services onOpenModal={handleOpenModal} />
       </main>
       <ProjectModal
         isOpen={isModalOpen}
