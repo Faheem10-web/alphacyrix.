@@ -624,7 +624,7 @@ img {
 .hero-title {
   font-family: var(--font-main);
   font-size: clamp(2.5rem, 4.3vw, 4.2rem);
-  font-weight: 700;
+  font-weight: 800 !important;
   line-height: 1.22;
   letter-spacing: -0.03em;
   color: #ffffff;
@@ -635,8 +635,13 @@ img {
 .hero-title .title-line {
   display: block;
   white-space: nowrap;
+  font-weight: 800 !important;
   padding-bottom: 0.12em;
   overflow: visible;
+}
+
+.hero-title .keyword-gradient {
+  font-weight: 800 !important;
 }
 
 /* "GET IN TOUCH" Button (Primary CTA: Vibrant Tech Blue to Cyan Gradient) */
