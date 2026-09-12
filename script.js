@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Billboard Screen Slider & Showcase Widget Sync
   const bgSlides = document.querySelectorAll('.slide-bg');
   const heroBgVideo = document.getElementById('heroBgVideo');
+  const heroBgVideo3 = document.getElementById('heroBgVideo3');
   const sliderDots = document.querySelectorAll('.slider-dot');
   const playPauseBtn = document.getElementById('playPauseBtn');
   const playPauseIcon = document.getElementById('playPauseIcon');
@@ -64,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const slideData = [
     {
-      thumb: 'assets/card-thumb-savant.jpg',
+      thumb: 'https://res.cloudinary.com/s65vvowk/video/upload/v1789185713/fhfh.jpg',
       bgIndex: 0
     },
     {
@@ -73,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  const heroBgVideo3 = document.getElementById('heroBgVideo3');
   if (heroBgVideo3) {
     heroBgVideo3.addEventListener('loadeddata', () => {
       try {
@@ -95,9 +95,85 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentSlide = 0;
   let isPlaying = true;
-  let slideInterval = null;
+  let slideTimer = null;
+
+  function clearSlideTimer() {
+    if (slideTimer) {
+      clearTimeout(slideTimer);
+      slideTimer = null;
+    }
+  }
+
+  // Real-time progress bar update tracking hero first video playback
+  function updateProgressBar() {
+    if (currentSlide === 0 && heroBgVideo && heroBgVideo.duration) {
+      const pct = (heroBgVideo.currentTime / heroBgVideo.duration) * 100;
+      if (progressFill0) {
+        progressFill0.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+      }
+    }
+  }
+
+  if (heroBgVideo) {
+    heroBgVideo.addEventListener('timeupdate', updateProgressBar);
+
+    // When the first video completes full playback, transition to next video
+    heroBgVideo.addEventListener('ended', () => {
+      if (currentSlide === 0 && isPlaying) {
+        if (progressFill0) progressFill0.style.width = '100%';
+        clearSlideTimer();
+        slideTimer = setTimeout(() => {
+          if (currentSlide === 0 && isPlaying) {
+            nextSlide();
+          }
+        }, 350);
+      }
+    });
+  }
+
+  // When the second video completes playback, transition back
+  if (heroBgVideo3) {
+    heroBgVideo3.addEventListener('ended', () => {
+      if (currentSlide === 1 && isPlaying) {
+        clearSlideTimer();
+        slideTimer = setTimeout(() => {
+          if (currentSlide === 1 && isPlaying) {
+            nextSlide();
+          }
+        }, 350);
+      }
+    });
+  }
+
+  function scheduleSlideTransition(index) {
+    clearSlideTimer();
+    if (!isPlaying) return;
+
+    if (index === 0) {
+      // Fallback timeout in case video ends without event (video duration ~20.1s)
+      const timeoutMs = (heroBgVideo && heroBgVideo.duration && !isNaN(heroBgVideo.duration))
+        ? (heroBgVideo.duration + 1.2) * 1000
+        : 22000;
+      slideTimer = setTimeout(() => {
+        if (currentSlide === 0 && isPlaying) {
+          nextSlide();
+        }
+      }, timeoutMs);
+    } else if (index === 1) {
+      // Slide 1 fallback (~8s)
+      const timeoutMs = (heroBgVideo3 && heroBgVideo3.duration && !isNaN(heroBgVideo3.duration))
+        ? (heroBgVideo3.duration + 1) * 1000
+        : 8500;
+      slideTimer = setTimeout(() => {
+        if (currentSlide === 1 && isPlaying) {
+          nextSlide();
+        }
+      }, timeoutMs);
+    }
+  }
 
   function goToSlide(index) {
+    clearSlideTimer();
     const allSlides = document.querySelectorAll('.slide-bg');
     if (allSlides.length > 0) {
       allSlides.forEach((slide, i) => {
@@ -105,8 +181,12 @@ document.addEventListener('DOMContentLoaded', () => {
         slide.classList.toggle('active', isActive);
         const vid = slide.tagName === 'VIDEO' ? slide : slide.querySelector('video');
         if (vid) {
-          if (isActive && isPlaying) {
-            vid.play().catch(() => {});
+          if (isActive) {
+            vid.currentTime = 0;
+            if (isPlaying) {
+              const p = vid.play();
+              if (p !== undefined) p.catch(() => {});
+            }
           } else {
             vid.pause();
           }
@@ -115,10 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (index === 0) {
-      if (progressFill0) progressFill0.style.width = '70%';
+      if (progressFill0) progressFill0.style.width = '0%';
       if (slideDot1) slideDot1.classList.remove('active');
     } else if (index === 1) {
-      if (progressFill0) progressFill0.style.width = '0%';
+      if (progressFill0) progressFill0.style.width = '100%';
       if (slideDot1) slideDot1.classList.add('active');
     }
 
@@ -127,6 +207,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     currentSlide = index;
+
+    if (isPlaying) {
+      scheduleSlideTransition(index);
+    }
   }
 
   function nextSlide() {
@@ -135,8 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function startAutoplay() {
-    stopAutoplay();
-    slideInterval = setInterval(nextSlide, 5000);
     isPlaying = true;
     if (playPauseIcon) {
       playPauseIcon.className = 'fa-solid fa-pause';
@@ -144,15 +226,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentSlideEl = document.querySelectorAll('.slide-bg')[currentSlide];
     if (currentSlideEl) {
       const vid = currentSlideEl.tagName === 'VIDEO' ? currentSlideEl : currentSlideEl.querySelector('video');
-      if (vid) vid.play().catch(() => {});
+      if (vid) {
+        const p = vid.play();
+        if (p !== undefined) p.catch(() => {});
+      }
     }
+    scheduleSlideTransition(currentSlide);
   }
 
   function stopAutoplay() {
-    if (slideInterval) {
-      clearInterval(slideInterval);
-      slideInterval = null;
-    }
+    clearSlideTimer();
     isPlaying = false;
     if (playPauseIcon) {
       playPauseIcon.className = 'fa-solid fa-play';
@@ -163,14 +246,21 @@ document.addEventListener('DOMContentLoaded', () => {
   if (slideIndicator0) {
     slideIndicator0.addEventListener('click', () => {
       goToSlide(0);
-      if (isPlaying) startAutoplay();
+      if (!isPlaying) startAutoplay();
     });
   }
 
   if (slideDot1) {
     slideDot1.addEventListener('click', () => {
       goToSlide(1);
-      if (isPlaying) startAutoplay();
+      if (!isPlaying) startAutoplay();
+    });
+  }
+
+  if (slideDot2) {
+    slideDot2.addEventListener('click', () => {
+      goToSlide(0);
+      if (!isPlaying) startAutoplay();
     });
   }
 
@@ -184,7 +274,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  startAutoplay();
+  // Initialize playback on load
+  goToSlide(0);
 
   // 3. Modals & Notifications
   const projectModal = document.getElementById('projectModal');

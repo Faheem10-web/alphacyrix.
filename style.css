@@ -282,11 +282,13 @@ img {
   pointer-events: none;
 }
 
-/* Slide 0 Video (Veo/Gemini): Zoomed to eliminate gaps & watermark */
+/* Slide 0 Video: Natural full view display */
 #heroBgVideo {
-  filter: brightness(1.38) contrast(1.03);
-  transform: scale(1.45);
-  transform-origin: 45% 40%;
+  filter: brightness(1.05) contrast(1.02);
+  transform: scale(1);
+  transform-origin: center center;
+  object-fit: cover;
+  object-position: center center;
 }
 
 /* Slide 1 Video (Pexels) Wrapper with Rich Dark Gradient Overlay */
@@ -707,11 +709,11 @@ img {
 }
 
 .progress-bar-fill {
-  width: 50%;
+  width: 0%;
   height: 100%;
   background: #fdf2f2;
   border-radius: 9999px;
-  transition: width 0.3s ease;
+  transition: width 0.15s linear;
 }
 
 .slider-dot {
