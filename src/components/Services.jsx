@@ -15,17 +15,6 @@ export default function Services({ onOpenModal }) {
               className="card-media-img"
               loading="lazy"
             />
-            <div className="media-overlay-gradient"></div>
-            <div className="media-floating-tag tag-top-left">
-              <span>MARKET</span>
-              <span>ANALYZE</span>
-              <span>GROW</span>
-              <span>REPEAT</span>
-            </div>
-            <div className="media-bottom-index">
-              <span className="index-num">01</span>
-              <span className="index-dash"></span>
-            </div>
           </div>
 
           {/* Content Box */}
@@ -58,15 +47,14 @@ export default function Services({ onOpenModal }) {
           </div>
         </div>
 
-        {/* CARD 2: DIGITAL INFRASTRUCTURE (DARK THEME) */}
-        <div className="showcase-card card-dark card-layout-media-right">
+        {/* CARD 2: DIGITAL INFRASTRUCTURE (LIGHT THEME) */}
+        <div className="showcase-card card-light card-layout-media-right">
           {/* Content Box */}
           <div className="card-content-box">
             <div className="card-top-row">
+              <div className="card-kicker kicker-cyan">DIGITAL INFRASTRUCTURE</div>
               <div className="card-corner-index">02 / 03</div>
             </div>
-
-            <div className="card-kicker kicker-cyan">DIGITAL INFRASTRUCTURE</div>
 
             <h2 className="card-heading">
               Develop your digital infrastructure
@@ -78,11 +66,11 @@ export default function Services({ onOpenModal }) {
 
             <div className="card-bottom-row">
               <div className="card-pills-group">
-                <button type="button" className="pill-badge pill-white" onClick={onOpenModal}>
+                <button type="button" className="pill-badge pill-dark" onClick={onOpenModal}>
                   <i className="fa-solid fa-cube"></i>
                   <span>App &amp; Web Development</span>
                 </button>
-                <button type="button" className="pill-badge pill-glass" onClick={onOpenModal}>
+                <button type="button" className="pill-badge pill-outline" onClick={onOpenModal}>
                   <i className="fa-solid fa-layer-group"></i>
                   <span>Web 3 Solutions</span>
                 </button>
@@ -98,12 +86,6 @@ export default function Services({ onOpenModal }) {
               className="card-media-img"
               loading="lazy"
             />
-            <div className="media-overlay-gradient"></div>
-            <div className="media-floating-tag tag-top-right">
-              <span>SECURE</span>
-              <span>FLEXIBLE</span>
-              <span>FUTURE READY</span>
-            </div>
           </div>
         </div>
 

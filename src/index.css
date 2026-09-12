@@ -2084,7 +2084,7 @@ img {
 }
 
 .kicker-cyan {
-  color: #38bdf8;
+  color: #0284c7;
 }
 
 .kicker-red {
@@ -2092,7 +2092,7 @@ img {
 }
 
 .card-corner-index {
-  font-family: var(--font-heading);
+  font-family: var(--font-main);
   font-size: 0.9rem;
   font-weight: 600;
   color: #64748b;
@@ -2101,11 +2101,11 @@ img {
 
 /* Headings */
 .card-heading {
-  font-family: var(--font-heading);
+  font-family: var(--font-main);
   font-size: clamp(2.1rem, 3.2vw, 2.9rem);
   font-weight: 700;
-  line-height: 1.14;
-  letter-spacing: -0.025em;
+  line-height: 1.16;
+  letter-spacing: -0.03em;
   margin-bottom: 1.5rem;
 }
 
